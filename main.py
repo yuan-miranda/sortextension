@@ -5,7 +5,7 @@ path = os.getcwd()
 
 files = os.listdir(path)
 for file in files:
-    if file == 'main.py' or file == 'log.txt':
+    if file == "main.py" or file == "log.txt":
         continue
 
     # current file concatenated with the path
