@@ -3,6 +3,12 @@ import time
 import sys
 
 def organize_files(directory):
+    directory = os.path.abspath(directory)
+    
+    if not os.path.exists(directory):
+        print(f"'{directory}' does not exist.")
+        return
+
     files = os.listdir(directory)
     for file in files:
         if file in ("main.py"):
@@ -41,7 +47,11 @@ def organize_files_continuously(directory, interval=1):
         time.sleep(interval)
 
 if __name__ == "__main__":
-    if "auto" in sys.argv:
-        organize_files_continuously(os.getcwd())
+    args = sys.argv[1:]
+    auto_mode = "auto" in args
+    directory = next((arg for arg in args if arg != "auto"), os.getcwd())
+    
+    if auto_mode:
+        organize_files_continuously(directory)
     else:
-        organize_files(os.getcwd())
+        organize_files(directory)
