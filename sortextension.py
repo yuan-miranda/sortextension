@@ -43,7 +43,11 @@ def organize_files(directory):
 
 def organize_files_continuously(directory, interval=1):
     while True:
-        organize_files(directory)
+        try:
+            organize_files(directory)
+        except Exception as e:
+            print(f"An error occurred: {e}")
+        print(f"Reorganizing files in '{directory}' every {interval} seconds.")
         time.sleep(interval)
 
 if __name__ == "__main__":
@@ -52,6 +56,6 @@ if __name__ == "__main__":
     directory = next((arg for arg in args if arg != "auto"), os.getcwd())
     
     if auto_mode:
-        organize_files_continuously(directory)
+        organize_files_continuously(directory, interval=5)
     else:
         organize_files(directory)
