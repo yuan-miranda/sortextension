@@ -12,6 +12,10 @@ def deorganize_files(directory):
 
     files = os.listdir(directory)
     for file in files:
+        # ignore dotext folder
+        if file == "dotext":
+            continue
+
         target_dir = os.path.join(directory, file)
 
         if os.path.isdir(target_dir):
