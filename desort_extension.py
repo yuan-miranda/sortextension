@@ -12,14 +12,27 @@ def deorganize_files(directory):
 
     files = os.listdir(directory)
     for file in files:
-        if file in ("main.py"):
-            continue
-
         target_dir = os.path.join(directory, file)
 
         if os.path.isdir(target_dir):
+            # iterate through items in the target directory
             for item in os.listdir(target_dir):
-                os.rename(os.path.join(target_dir, item), os.path.join(directory, item))
+                original_path = os.path.join(target_dir, item)
+                destination_path = os.path.join(directory, item)
+
+                # if in case of same name, append a number to the filename e.g. file (1).txt
+                if os.path.exists(destination_path):
+                    base, ext = os.path.splitext(item)
+                    counter = 1
+                    while True:
+                        new_name = f"{base} ({counter}){ext}"
+                        new_destination_path = os.path.join(directory, new_name)
+                        if not os.path.exists(new_destination_path):
+                            destination_path = new_destination_path
+                            break
+                        counter += 1
+
+                os.rename(original_path, destination_path)
 
 
 def deorganize_files_continuously(directory, interval=1):
